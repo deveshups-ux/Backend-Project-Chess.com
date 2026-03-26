@@ -3,8 +3,6 @@ const socket = require("socket.io");
 const http = require("http");
 const { Chess } = require("chess.js");
 const path = require("path");
-const { futimes } = require("fs");
-const { title } = require("process");
 
 const app = express();
 const server = http.createServer(app);
@@ -40,7 +38,7 @@ io.on("connection", function (uniquesocket) {
     }
   });
 
-  uniquesocket.io("move", (move) => {
+  uniquesocket.on("move", (move) => {
     try {
       if (chess.turn() === "w" && uniquesocket.id !== players.white) return;
       if (chess.turn() === "b" && uniquesocket.id !== players.black) return;
